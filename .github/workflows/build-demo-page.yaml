@@ -16,7 +16,7 @@ on:
 permissions: write-all
 
 jobs:
-  lint-test:
+  build-config:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,5 +25,26 @@ jobs:
         with:
           python-version: '3.10' 
       - run: pip install -r requirements.txt
-      - run: python items_config_generator.py >> items.yaml
-      - run: cat items.yaml
+      - run: mkdir config
+      - run: python items_config_generator.py >> config/items.yaml
+      - name: Upload math result for job 1
+        uses: actions/upload-artifact@v3
+        with:
+          name: items-config
+          path: config/items.yaml
+  container-test-job:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/czoczo/cavu:main
+      volumes:
+        - config:/config
+        - dist:/dist
+      options: --cpus 1
+    steps:
+      - name: Download math result for job 1
+        uses: actions/download-artifact@v3
+        with:
+          name: items-config
+      - name: Build CasaVue dashboard
+        run: /casavue -static 
+
