@@ -46,6 +46,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: items-config
+      - run: find 
       - name: Build CasaVue dashboard
-        run: /casavue -static 
+        run: ./casavue -static 
 
