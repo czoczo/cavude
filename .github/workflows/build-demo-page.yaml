@@ -47,6 +47,10 @@ jobs:
         with:
           name: items-config
       - run: pwd
+      - run: cd /
+      - run: pwd
+      - run: find /config
       - name: Build CasaVue dashboard
         run: cd / && ./casavue -static 
+      - run: ls -al /dist
 
