@@ -33,6 +33,7 @@ jobs:
           name: items-config
           path: config/items.yaml
   container-test-job:
+    needs: build-config
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/czoczo/cavu:main
