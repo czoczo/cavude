@@ -20,18 +20,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.10' 
-      - run: pip install -r requirements.txt
-      - run: python items_config_generator.py >> items.yaml
-      - name: Upload math result for job 1
-        uses: actions/upload-artifact@v3
+
+      - name: Download Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate CasaVue items config
+        run: python items_config_generator.py >> items.yaml
+
+      - name: Upload items config
+        uses: actions/upload-artifact@v4
         with:
           name: items-config
           path: items.yaml
-  container-test-job:
+
+  build-casavue-static-dashboard:
     needs: build-config
     runs-on: ubuntu-latest
     container:
@@ -39,44 +46,40 @@ jobs:
       volumes:
         - config:/config
         - dist:/dist
-      options: --cpus 1
     steps:
-      - name: Download math result for job 1
-        uses: actions/download-artifact@v3
+      - name: Download items config
+        uses: actions/download-artifact@v4
         with:
           name: items-config
           path: /config
-      - run: pwd
-      - run: cd /
-      - run: pwd
-      - run: find /config
+
       - name: Build CasaVue dashboard
-        run: cd / && ./casavue -static 
-      - run: ls -al /dist
-      - name: Upload math result for job 2
-        uses: actions/upload-artifact@v3
+        run: cd / && ./casavue -static
+
+      - name: Upload CasaVue static build
+        uses: actions/upload-artifact@v4
         with:
-          name: pages
+          name: github-pages
           path: /dist
-  # Single deploy job since we're just deploying
+
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Download math result for job 2
-        uses: actions/download-artifact@v3
-        with:
-          name: pages
-          path: .
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # Upload entire repository
-          path: '.'
+      #- name: Download math result for job 2
+      #  uses: actions/download-artifact@v3
+      #  with:
+      #    name: pages
+      #    path: .
+      #- name: Setup Pages
+      #  uses: actions/configure-pages@v5
+      #- name: Upload artifact
+      #  uses: actions/upload-pages-artifact@v3
+      #  with:
+      #    # Upload entire repository
+      #    path: '.'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
