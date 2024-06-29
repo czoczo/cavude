@@ -17,6 +17,9 @@ pattern_namespace = r"^### (.+)$"
 # Pattern for catching appications with DEMO links
 pattern_item = r"^- \[([^\]]+)\]\([^\)]+\) - (.+) \(\[Demo\]\(([^\)]+)\)"
 
+# config header
+print("items:")
+
 for line in lines:
     match_namespace = re.search(pattern_namespace, line)
     match_item = re.search(pattern_item, line)
