@@ -59,7 +59,7 @@ jobs:
       - name: Upload CasaVue static build
         uses: actions/upload-artifact@v4
         with:
-          name: github-pages
+          name: pages
           path: /dist
 
   deploy:
@@ -69,18 +69,17 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      #- name: Download math result for job 2
-      #  uses: actions/download-artifact@v3
-      #  with:
-      #    name: pages
-      #    path: .
-      #- name: Setup Pages
-      #  uses: actions/configure-pages@v5
-      #- name: Upload artifact
-      #  uses: actions/upload-pages-artifact@v3
-      #  with:
-      #    # Upload entire repository
-      #    path: '.'
+      - name: Download math result for job 2
+        uses: actions/download-artifact@v3
+        with:
+          name: pages
+          path: .
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
