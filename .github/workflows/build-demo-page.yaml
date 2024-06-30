@@ -34,7 +34,7 @@ jobs:
           name: items-config
           path: items.yaml
 
-  build-casavue-static-dashboard:
+  build-casavue-static-content:
     needs: build-config
     runs-on: ubuntu-latest
     container:
