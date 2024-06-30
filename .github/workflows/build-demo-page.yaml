@@ -1,4 +1,4 @@
-name: Deploy demo
+name: Deploy CasaVue demo
 
 on:
   push:
@@ -10,7 +10,6 @@ permissions:
   contents: read
   pages: write
   id-token: write
-#permissions: write-all
 
 jobs:
   build-config:
@@ -44,11 +43,11 @@ jobs:
         - config:/config
         - dist:/dist
     steps:
-      #- name: Download items config
-      #  uses: actions/download-artifact@v4
-      #  with:
-      #    name: items-config
-      #    path: /config
+      - name: Download items config
+        uses: actions/download-artifact@v4
+        with:
+          name: items-config
+          path: /config
 
       - name: Build CasaVue dashboard
         run: cd / && ./casavue -static
@@ -71,5 +70,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
 
