@@ -47,20 +47,25 @@ jobs:
         - config:/config
         - dist:/dist
     steps:
-      - name: Download items config
-        uses: actions/download-artifact@v4
-        with:
-          name: items-config
-          path: /config
+      #- name: Download items config
+      #  uses: actions/download-artifact@v4
+      #  with:
+      #    name: items-config
+      #    path: /config
 
       - name: Build CasaVue dashboard
         run: cd / && ./casavue -static
-
-      - name: Upload CasaVue static build
-        uses: actions/upload-artifact@v4
+        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: pages
-          path: /dist
+          path: '.'
+
+      #- name: Upload CasaVue static build
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    name: pages
+      #    path: /dist
 
   deploy:
     needs: build-casavue-static-dashboard
@@ -69,17 +74,17 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Download math result for job 2
-        uses: actions/download-artifact@v4
-        with:
-          name: pages
-          path: .
+      #- name: Download math result for job 2
+      #  uses: actions/download-artifact@v4
+      #  with:
+      #    name: pages
+      #    path: .
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: '.'
+      #- name: Upload artifact
+      #  uses: actions/upload-pages-artifact@v3
+      #  with:
+      #    path: '.'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
