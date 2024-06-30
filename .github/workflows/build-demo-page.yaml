@@ -1,19 +1,16 @@
 name: Deploy demo
 
 on:
-  # Trigger the workflow every time you push to the `main` branch
-  # Using a different branch name? Replace `main` with your branch’s name
   push:
     branches: [ main ]
-  # Allows you to run this workflow manually from the Actions tab on GitHub.
   workflow_dispatch:
 
 # Allow this job to clone the repo and create a page deployment
-#permissions:
-  #contents: read
-  #pages: write
-  #id-token: write
-permissions: write-all
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+#permissions: write-all
 
 jobs:
   build-config:
@@ -61,12 +58,6 @@ jobs:
         with:
           path: '/dist'
 
-      #- name: Upload CasaVue static build
-      #  uses: actions/upload-artifact@v4
-      #  with:
-      #    name: pages
-      #    path: /dist
-
   deploy:
     needs: build-casavue-static-dashboard
     environment:
@@ -74,17 +65,9 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      #- name: Download math result for job 2
-      #  uses: actions/download-artifact@v4
-      #  with:
-      #    name: pages
-      #    path: .
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      #- name: Upload artifact
-      #  uses: actions/upload-pages-artifact@v3
-      #  with:
-      #    path: '.'
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
