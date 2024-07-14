@@ -38,7 +38,7 @@ jobs:
     needs: build-config
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/czoczo/cavu:main
+      image: ghcr.io/czoczo/cavu:0.0.97-alpine
       volumes:
         - config:/config
         - dist:/dist
