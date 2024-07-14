@@ -58,7 +58,7 @@ jobs:
           path: '/dist'
 
   deploy:
-    needs: build-casavue-static-dashboard
+    needs: build-casavue-static-content
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
