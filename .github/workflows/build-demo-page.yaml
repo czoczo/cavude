@@ -13,6 +13,7 @@ permissions:
 
 jobs:
   build-config:
+    id: build-config
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
