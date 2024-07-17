@@ -57,7 +57,7 @@ jobs:
       #    path: /app/config
       
       - name: Write items to file
-        run: echo "${{ env.ITEMS }}" >> /app/config/items.yaml
+        run: echo "$ITEMS" > /app/config/items.yaml
 
       - name: preview
         run: cat /app/config/items.yaml
