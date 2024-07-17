@@ -73,6 +73,8 @@ jobs:
         run: cd /app && ./casavue -static
         
       - name: Upload artifact
+        env:
+          RUNNER_TEMP: /tmp
         uses: actions/upload-pages-artifact@v3
         with:
           path: '/app/dist'
