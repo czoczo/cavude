@@ -49,7 +49,7 @@ jobs:
     needs: build-config
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/czoczo/cavu:0.0.101-alpine
+      image: ghcr.io/czoczo/cavu:0.0.102-alpine-root
       volumes:
         - config:/app/config
         - dist:/app/dist
@@ -73,8 +73,6 @@ jobs:
         run: cd /app && ./casavue -static
         
       - name: Upload artifact
-        env:
-          RUNNER_TEMP: /tmp
         uses: actions/upload-pages-artifact@v3
         with:
           path: '/app/dist'
