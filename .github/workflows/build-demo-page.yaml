@@ -14,6 +14,8 @@ permissions:
 jobs:
   build-config:
     runs-on: ubuntu-latest
+    outputs:
+      items: ${{ steps.out_step.outputs.items}}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,24 +31,10 @@ jobs:
         run: python items_config_generator.py >> items.yaml
 
       - name: Set items as output
+        id: out_step
         run: |
           {
-            echo 'ITEMS<<EOF'
-            cat items.yaml
-            echo EOF
-          } >> "$GITHUB_ENV"
-
-      - name: TEST Write items to file
-        run: echo "$ITEMS" > items2.yaml
-
-      - name: TEST preview
-        run: cat items2.yaml
-
-      
-      - name: Set items as output
-        run: |
-          {
-            echo 'ITEMS<<EOF'
+            echo 'items<<EOF'
             cat items.yaml
             echo EOF
           } >> "$GITHUB_OUTPUT"
@@ -73,7 +61,7 @@ jobs:
       #    path: /app/config
       #
       - name: Write items to file
-        run: echo "${{ needs.build-config.outputs.ITEMS }}" > /app/config/items.yaml
+        run: echo "${{ needs.build-config.outputs.items }}" > /app/config/items.yaml
 
       - name: preview
         run: cat /app/config/items.yaml
