@@ -30,8 +30,11 @@ jobs:
 
       - name: Set items as output
         run: |
-          FILE_CONTENT=$(<items.yaml)
-          echo "ITEMS=$FILE_CONTENT" >> $GITHUB_ENV
+          {
+            echo 'ITEMS<<EOF'
+            cat items.yaml
+            echo EOF
+          } >> "$GITHUB_ENV"
       #- name: Upload items config
       #  uses: actions/upload-artifact@v3
       #  with:
