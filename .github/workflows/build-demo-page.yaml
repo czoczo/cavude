@@ -47,7 +47,7 @@ jobs:
         uses: actions/download-artifact@v4.1.8
         with:
           name: items-config
-          path: /app/config/
+          path: /app/config
 
       - name: Build CasaVue dashboard
         run: cd /app && ./casavue -static
