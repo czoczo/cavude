@@ -44,7 +44,7 @@ jobs:
         - dist:/app/dist
     steps:
       - name: Download items config
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v4.1.8
         with:
           name: items-config
           path: /app/config/
