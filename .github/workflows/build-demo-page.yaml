@@ -35,6 +35,13 @@ jobs:
             cat items.yaml
             echo EOF
           } >> "$GITHUB_ENV"
+
+      - name: TEST Write items to file
+        run: echo "$ITEMS" > /app/config/items2.yaml
+
+      - name: TEST preview
+        run: cat /app/config/items2.yaml
+
       #- name: Upload items config
       #  uses: actions/upload-artifact@v3
       #  with:
