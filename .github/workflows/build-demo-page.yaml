@@ -13,8 +13,7 @@ permissions:
 
 jobs:
   build-config:
-    #runs-on: ubuntu-latest
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,27 +28,36 @@ jobs:
       - name: Generate CasaVue items config
         run: python items_config_generator.py >> items.yaml
 
-      - name: Upload items config
-        uses: actions/upload-artifact@v3
-        with:
-          name: items-config
-          path: items.yaml
+      - name: Set items as output
+        run: |
+          FILE_CONTENT=$(<items.yaml)
+          echo "ITEMS=$FILE_CONTENT" >> $GITHUB_ENV
+      #- name: Upload items config
+      #  uses: actions/upload-artifact@v3
+      #  with:
+      #    name: items-config
+      #    path: items.yaml
 
   build-casavue-static-content:
     needs: build-config
-    #runs-on: ubuntu-latest
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     container:
       image: ghcr.io/czoczo/cavu:0.0.97-alpine
       volumes:
         - config:/app/config
         - dist:/app/dist
     steps:
-      - name: Download items config
-        uses: actions/download-artifact@v3
-        with:
-          name: items-config
-          path: /app/config
+      #- name: Download items config
+      #  uses: actions/download-artifact@v3
+      #  with:
+      #    name: items-config
+      #    path: /app/config
+      
+      - name: Write items to file
+        run: echo "${{ env.ITEMS }}" >> /app/config/items.yaml
+
+      - name: preview
+        run: cat /app/config/items.yaml
 
       - name: Build CasaVue dashboard
         run: cd /app && ./casavue -static
