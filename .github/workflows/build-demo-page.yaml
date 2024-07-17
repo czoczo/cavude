@@ -72,9 +72,9 @@ jobs:
       #    name: items-config
       #    path: /app/config
       #
-      - rune: echo "${{ steps }}"
-      - rune: echo "${{ steps.build-config }}"
-      - rune: echo "${{ steps.build-config.OUTPUTS }}"
+      - run: echo "${{ steps }}"
+      - run: echo "${{ steps.build-config }}"
+      - run: echo "${{ steps.build-config.OUTPUTS }}"
       
       - name: Write items to file
         run: echo "${{ steps.build-config.outputs.ITEMS }}" > /app/config/items.yaml
