@@ -42,6 +42,14 @@ jobs:
       - name: TEST preview
         run: cat items2.yaml
 
+      - name: Set items as output
+        run: |
+          {
+            echo 'ITEMS<<EOF'
+            cat items.yaml
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
+
       #- name: Upload items config
       #  uses: actions/upload-artifact@v3
       #  with:
@@ -64,7 +72,7 @@ jobs:
       #    path: /app/config
       
       - name: Write items to file
-        run: echo "$ITEMS" > /app/config/items.yaml
+        run: echo "${{ steps.build-config.outputs.ITEMS }}" > /app/config/items.yaml
 
       - name: preview
         run: cat /app/config/items.yaml
