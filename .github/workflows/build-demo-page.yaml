@@ -61,7 +61,10 @@ jobs:
       #    path: /app/config
       #
       - name: Write items to file
-        run: echo "${{ needs.build-config.outputs.items }}" > /app/config/items.yaml
+        run: |
+          cat >/app/config/items.yaml <<EOF
+          ${{ needs.build-config.outputs.items }}
+          EOF
 
       - name: preview
         run: cat /app/config/items.yaml
