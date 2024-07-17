@@ -42,6 +42,7 @@ jobs:
       - name: TEST preview
         run: cat items2.yaml
 
+      
       - name: Set items as output
         run: |
           {
@@ -70,6 +71,10 @@ jobs:
       #  with:
       #    name: items-config
       #    path: /app/config
+      #
+      - rune: echo "${{ steps }}"
+      - rune: echo "${{ steps.build-config }}"
+      - rune: echo "${{ steps.build-config.OUTPUTS }}"
       
       - name: Write items to file
         run: echo "${{ steps.build-config.outputs.ITEMS }}" > /app/config/items.yaml
