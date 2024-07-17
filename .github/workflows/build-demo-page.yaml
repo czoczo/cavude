@@ -40,22 +40,22 @@ jobs:
     container:
       image: ghcr.io/czoczo/cavu:0.0.97-alpine
       volumes:
-        - config:/config
-        - dist:/dist
+        - config:/app/config
+        - dist:/app/dist
     steps:
       - name: Download items config
         uses: actions/download-artifact@v4
         with:
           name: items-config
-          path: /config/
+          path: /app/config/
 
       - name: Build CasaVue dashboard
-        run: cd / && ./casavue -static
+        run: cd /app && ./casavue -static
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '/dist'
+          path: '/app/dist'
 
   deploy:
     needs: build-casavue-static-content
