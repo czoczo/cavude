@@ -40,7 +40,7 @@ jobs:
         run: echo "$ITEMS" > items2.yaml
 
       - name: TEST preview
-        run: items2.yaml
+        run: cat items2.yaml
 
       #- name: Upload items config
       #  uses: actions/upload-artifact@v3
