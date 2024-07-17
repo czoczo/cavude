@@ -13,7 +13,6 @@ permissions:
 
 jobs:
   build-config:
-    id: build-config
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -73,12 +72,8 @@ jobs:
       #    name: items-config
       #    path: /app/config
       #
-      - run: echo "${{ steps }}"
-      - run: echo "${{ steps.build-config }}"
-      - run: echo "${{ steps.build-config.OUTPUTS }}"
-      
       - name: Write items to file
-        run: echo "${{ steps.build-config.outputs.ITEMS }}" > /app/config/items.yaml
+        run: echo "${{ needs.build-config.outputs.ITEMS }}" > /app/config/items.yaml
 
       - name: preview
         run: cat /app/config/items.yaml
