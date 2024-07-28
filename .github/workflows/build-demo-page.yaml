@@ -49,7 +49,7 @@ jobs:
     needs: build-config
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/czoczo/cavu:0.0.109-alpine-root
+      image: ghcr.io/czoczo/cavu:0.0.110-alpine-root
       volumes:
         - config:/app/config
         - dist:/app/dist
