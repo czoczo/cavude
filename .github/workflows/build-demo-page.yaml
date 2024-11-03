@@ -48,14 +48,14 @@ jobs:
         - config:/app/config
         - dist:/app/dist
     steps:
-      #- name: Write items to file
-      #  run: |
-      #    cat >/app/config/items.yaml <<EOF
-      #    ${{ needs.build-config.outputs.items }}
-      #    EOF
+      - name: Write items to file
+        run: |
+          cat >/app/config/items.yaml <<EOF
+          ${{ needs.build-config.outputs.items }}
+          EOF
 
-      #- name: preview
-      #  run: cat /app/config/items.yaml
+      - name: preview
+        run: cat /app/config/items.yaml
 
       - name: Build CasaVue dashboard
         run: cd /app && ./casavue -static
