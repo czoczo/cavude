@@ -43,19 +43,19 @@ jobs:
     needs: build-config
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/czoczo/cavu:0.0.139-alpine-nonroot
+      image: ghcr.io/czoczo/cavu:0.0.140-alpine-nonroot
       volumes:
         - config:/app/config
         - dist:/app/dist
     steps:
-      - name: Write items to file
-        run: |
-          cat >/app/config/items.yaml <<EOF
-          ${{ needs.build-config.outputs.items }}
-          EOF
+      #- name: Write items to file
+      #  run: |
+      #    cat >/app/config/items.yaml <<EOF
+      #    ${{ needs.build-config.outputs.items }}
+      #    EOF
 
-      - name: preview
-        run: cat /app/config/items.yaml
+      #- name: preview
+      #  run: cat /app/config/items.yaml
 
       - name: Build CasaVue dashboard
         run: cd /app && ./casavue -static
