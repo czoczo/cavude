@@ -32,7 +32,8 @@ jobs:
 
       - name: Run Docker container
         run: |
-          docker run --name casavue-container -v $(pwd)/items.yaml:/app/config/items.yaml ghcr.io/czoczo/cavu:0.0.140-alpine-nonroot
+          docker run --name casavue-container ghcr.io/czoczo/cavu:0.0.140-alpine-nonroot
+        #docker run --name casavue-container -v $(pwd)/items.yaml:/app/config/items.yaml ghcr.io/czoczo/cavu:0.0.140-alpine-nonroot
 
       - name: Copy artifact from container
         run: |
