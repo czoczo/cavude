@@ -12,7 +12,7 @@ permissions:
   id-token: write
 
 jobs:
-  build-config:
+  build:
     runs-on: ubuntu-latest
     outputs:
       items: ${{ steps.out_step.outputs.items}}
@@ -30,24 +30,37 @@ jobs:
       - name: Generate CasaVue items config
         run: python items_config_generator.py >> items.yaml
 
-      - name: Set items as output
-        id: out_step
+      - name: Run Docker container
         run: |
-          {
-            echo 'items<<EOF'
-            cat items.yaml
-            echo EOF
-          } >> "$GITHUB_OUTPUT"
+          docker run --name casavue-container -v $(pwd)/items.yaml:/app/config/items.yaml ghcr.io/czoczo/cavu:0.0.140-alpine-nonroot
 
-  build-casavue-static-content:
-    needs: build-config
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/czoczo/cavu:0.0.140-alpine-nonroot
-      volumes:
-        - config:/app/config
-        - dist:/app/dist
-    steps:
+      - name: Copy artifact from container
+        run: |
+          docker cp casavue-container:/app/dist ./dist
+          docker rm casavue-container
+      
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          path: ./dist
+      #- name: Set items as output
+      #  id: out_step
+      #  run: |
+      #    {
+      #      echo 'items<<EOF'
+      #      cat items.yaml
+      #      echo EOF
+      #    } >> "$GITHUB_OUTPUT"
+
+#  build-casavue-static-content:
+#    needs: build-config
+#    runs-on: ubuntu-latest
+#    container:
+#      image: ghcr.io/czoczo/cavu:0.0.140-alpine-nonroot
+#      volumes:
+#        - config:/app/config
+#        - dist:/app/dist
+#    steps:
       #- name: Write items to file
       #  run: |
       #    cat >/app/config/items.yaml <<EOF
@@ -57,13 +70,13 @@ jobs:
       #- name: preview
       #  run: cat /app/config/items.yaml
 
-      - name: Build CasaVue dashboard
-        run: cd /app && ./casavue -static
+      #- name: Build CasaVue dashboard
+      #  run: cd /app && ./casavue -static
         
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: '/app/dist'
+#      - name: Upload artifact
+#        uses: actions/upload-pages-artifact@v3
+#        with:
+#          path: '/app/dist'
 
   deploy:
     needs: build-casavue-static-content
