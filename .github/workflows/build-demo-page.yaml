@@ -39,35 +39,23 @@ jobs:
             echo EOF
           } >> "$GITHUB_OUTPUT"
 
-      #- name: Upload items config
-      #  uses: actions/upload-artifact@v3
-      #  with:
-      #    name: items-config
-      #    path: items.yaml
-
   build-casavue-static-content:
     needs: build-config
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/czoczo/cavu:0.0.112-alpine-root
+      image: ghcr.io/czoczo/cavu:0.0.139-alpine-nonroot
       volumes:
         - config:/app/config
         - dist:/app/dist
     steps:
-      #- name: Download items config
-      #  uses: actions/download-artifact@v3
-      #  with:
-      #    name: items-config
-      #    path: /app/config
-      #
-      - name: Write items to file
-        run: |
-          cat >/app/config/items.yaml <<EOF
-          ${{ needs.build-config.outputs.items }}
-          EOF
+      #- name: Write items to file
+      #  run: |
+      #    cat >/app/config/items.yaml <<EOF
+      #    ${{ needs.build-config.outputs.items }}
+      #    EOF
 
-      - name: preview
-        run: cat /app/config/items.yaml
+      #- name: preview
+      #  run: cat /app/config/items.yaml
 
       - name: Build CasaVue dashboard
         run: cd /app && ./casavue -static
