@@ -41,7 +41,9 @@ jobs:
           docker rm casavue-container
       
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        #uses: actions/upload-artifact@v3
+        id: deployment
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
       #- name: Set items as output
@@ -86,8 +88,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+      #- name: Setup Pages
+      #  uses: actions/configure-pages@v5
 
       - name: Deploy to GitHub Pages
         id: deployment
