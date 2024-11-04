@@ -20,20 +20,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.10' 
-
-      - name: Download Python dependencies
-        run: pip install -r requirements.txt
-
-      - name: Generate CasaVue items config
-        run: python items_config_generator.py >> items.yaml
-
       - name: Run Docker container
         run: |
-          docker run --name casavue-container ghcr.io/czoczo/cavu:0.0.140-alpine-nonroot -static
-        #docker run --name casavue-container -v $(pwd)/items.yaml:/app/config/items.yaml ghcr.io/czoczo/cavu:0.0.140-alpine-nonroot -static
+          docker run --name casavue-container \
+            -v $(pwd)/config:/app/config \
+            ghcr.io/czoczo/cavu:0.0.141-alpine-nonroot -static
 
       - name: Copy artifact from container
         run: |
@@ -41,56 +32,18 @@ jobs:
           docker rm casavue-container
       
       - name: Upload Artifact
-        #uses: actions/upload-artifact@v3
         id: deployment
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
-      #- name: Set items as output
-      #  id: out_step
-      #  run: |
-      #    {
-      #      echo 'items<<EOF'
-      #      cat items.yaml
-      #      echo EOF
-      #    } >> "$GITHUB_OUTPUT"
-
-#  build-casavue-static-content:
-#    needs: build-config
-#    runs-on: ubuntu-latest
-#    container:
-#      image: ghcr.io/czoczo/cavu:0.0.140-alpine-nonroot
-#      volumes:
-#        - config:/app/config
-#        - dist:/app/dist
-#    steps:
-      #- name: Write items to file
-      #  run: |
-      #    cat >/app/config/items.yaml <<EOF
-      #    ${{ needs.build-config.outputs.items }}
-      #    EOF
-
-      #- name: preview
-      #  run: cat /app/config/items.yaml
-
-      #- name: Build CasaVue dashboard
-      #  run: cd /app && ./casavue -static
-        
-#      - name: Upload artifact
-#        uses: actions/upload-pages-artifact@v3
-#        with:
-#          path: '/app/dist'
 
   deploy:
-    needs: build #-casavue-static-content
+    needs: build
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      #- name: Setup Pages
-      #  uses: actions/configure-pages@v5
-
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

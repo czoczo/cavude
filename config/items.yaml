@@ -1,0 +1,64 @@
+items:
+    - name: Duck Duck Go
+      namespace: searching
+      url: "https://duckduckgo.com/"
+
+    - name: Bing
+      namespace: searching
+      url: "https://www.bing.com/"
+
+    - name: Google
+      namespace: searching
+      url: "https://www.google.com/"
+
+    - name: Jellyfin
+      namespace: media
+      url: "https://jellyfin.org/"
+
+    - name: Syncthing
+      namespace: media
+      url: "https://syncthing.net/"
+
+    - name: Vaultwarden
+      namespace: security
+      url: "https://github.com/dani-garcia/vaultwarden"
+
+    - name: Authelia
+      namespace: security
+      url: "https://www.authelia.com/"
+
+    - name: ArgoCD
+      namespace: code
+      url: "https://argo-cd.readthedocs.io/en/stable/"
+
+    - name: Gitea
+      namespace: code
+      url: "https://about.gitea.com/"
+
+    - name: Traefik
+      namespace: network
+      url: "https://doc.traefik.io/traefik/"
+
+    - name: Pi-hole
+      namespace: network
+      url: "https://pi-hole.net/"
+
+    - name: Grafana
+      namespace: monitoring
+      url: "https://grafana.com/"
+
+    - name: Zabbix
+      namespace: monitoring
+      url: "https://www.zabbix.com/"
+
+    - name: Home Assistant
+      namespace: iot
+      url: "https://www.home-assistant.io/"
+
+    - name: mosquitto
+      namespace: iot
+      url: "https://mosquitto.org/"
+
+    - name: Zigbee2MQTT
+      namespace: iot
+      url: "https://www.zigbee2mqtt.io/"
