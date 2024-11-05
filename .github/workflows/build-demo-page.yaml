@@ -28,7 +28,7 @@ jobs:
 
       - name: Copy artifact from container
         run: |
-          docker cp casavue-container:/home/nonroot/frontend/dist/ ./dist
+          docker cp casavue-container:/home/nonroot/dist/ ./dist
           docker rm casavue-container
       
       - name: Upload Artifact
