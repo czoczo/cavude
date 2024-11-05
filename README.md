@@ -8,8 +8,8 @@ This repo is a simple example of how [CasaVue](https://casavue.app) can be used 
 .
 ├── .github
 │   └── workflows
-│       └── build-demo-page.yaml # Web page build and publish script
-├── config                       # CasaVue config files
+│       └── build-demo-page.yaml    # Web page build and publish script
+├── config                          # CasaVue config files
 │   ├── items.yaml
 │   └── main.yaml
 └── README.md
