@@ -16,4 +16,4 @@ This repo is a simple example of how [CasaVue](https://casavue.app) can be used 
 ```
 
 All steps are implemented in [Github Workflow](https://github.com/czoczo/casavue-demo/blob/main/.github/workflows/build-demo-page.yaml).  
-Description of configuration files may be found [here](https://casavue.app/configuration/file/)
+Description of configuration files may be found [here](https://casavue.app/configuration/file/).
