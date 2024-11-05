@@ -24,11 +24,11 @@ jobs:
         run: |
           docker run --name casavue-container \
             -v $(pwd)/config:/app/config \
-            ghcr.io/czoczo/cavu:0.0.141-distroless -static
+            ghcr.io/czoczo/cavu:0.0.142-distroless -static
 
       - name: Copy artifact from container
         run: |
-          docker cp casavue-container:/home/nonroot/dist/ ./dist
+          docker cp casavue-container:/app/dist/ ./dist
           docker rm casavue-container
       
       - name: Upload Artifact
