@@ -1,20 +1,2 @@
 customization:
   name: Your Text!
-  colors:
-    theme: "#deaded"
-    items:
-      saturation: 8
-      lightness: 84
-
-content_filters:
-  namespace:
-    mode: "include"
-    pattern: "^.*$"
-
-  item:
-    mode: "include"
-    pattern: "^.*$"
-allow_skip_tls_verify: true
-
-logging:
-  level: "info"
